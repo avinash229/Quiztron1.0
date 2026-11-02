@@ -297,7 +297,12 @@ async function handleApi(request, response, pathname) {
       body.timeExpired === true,
       rounds
     );
-    return sendJson(response, 200, submitted);
+    const { correct, score, timeExpired } = submitted.result;
+    return sendJson(response, 200, {
+      result: { correct, score, timeExpired },
+      totalScore: submitted.totalScore,
+      status: submitted.status
+    });
   }
 
   sendError(response, 404, "API endpoint not found.");
