@@ -37,7 +37,7 @@ if (USE_DATABASE && process.env.NODE_ENV === "production" && process.env.DATABAS
 const pool = USE_DATABASE
   ? new Pool({
       connectionString: connectionStringWithoutSslOverrides(DATABASE_URL),
-      ssl: process.env.DATABASE_SSL === "false" ? false : { rejectUnauthorized: true },
+      ssl: process.env.DATABASE_SSL === "production" ? { rejectUnauthorized: false } : false,
       max: 5,
       connectionTimeoutMillis: 10_000,
       idleTimeoutMillis: 30_000
