@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Quiztron Admin</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f3f5f9;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #e4e8f0;
+      --blue: #3867ed;
+      --blue-dark: #2852ce;
+      --soft-blue: #edf2ff;
+      --surface: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    body { min-width: 320px; min-height: 100vh; margin: 0; background: radial-gradient(ellipse at 82% 0%, rgb(91 126 237 / 10%), transparent 34rem), #f3f5f9; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 56px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+    .brand-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: var(--blue); color: white; font-size: 19px; font-weight: 800; }
+    .brand-name { font-size: 16px; font-weight: 800; letter-spacing: -.03em; }
+    .brand-subtitle { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .back-link { color: var(--blue); font-size: 13px; font-weight: 750; text-decoration: none; }
+    .back-link:hover { color: var(--blue-dark); }
+    h1 { margin: 0 0 7px; font-size: clamp(29px, 5vw, 40px); letter-spacing: -.05em; }
+    h2 { margin: 0; font-size: 19px; letter-spacing: -.025em; }
+    p { margin-top: 0; }
+    .intro { margin-bottom: 22px; }
+    .intro p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .local-note { margin-top: 8px; color: #778198; font-size: 11px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-bottom: 24px; }
+    .stat, .panel { border: 1px solid rgb(228 232 240 / 90%); border-radius: 17px; background: var(--surface); box-shadow: 0 12px 35px rgb(22 34 61 / 5%); }
+    .stat { padding: 17px 19px; }
+    .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .stat-value { margin-top: 5px; font-size: 27px; font-weight: 800; letter-spacing: -.04em; }
+    .panel { margin-bottom: 20px; padding: 22px; }
+    .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+    .muted { color: var(--muted); }
+    .button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; border: 0; border-radius: 10px; font-weight: 750; }
+    .button.primary { background: var(--blue); color: #fff; }
+    .button.primary:hover { background: var(--blue-dark); }
+    .button.secondary { border: 1px solid var(--line); background: white; color: var(--ink); }
+    .button.secondary:hover { background: #f7f8fb; }
+    .button.danger { border: 1px solid #f0c4c6; background: #fff6f6; color: #a3313a; }
+    .button.small { min-height: 34px; padding: 0 11px; font-size: 12px; }
+    .button:disabled { cursor: wait; opacity: .6; }
+    .hidden { display: none !important; }
+    .login-panel { width: min(440px, 100%); margin: 0 auto 30px; padding: 25px; }
+    .login-panel h2 { margin-bottom: 7px; }
+    .login-panel p { margin-bottom: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .login-field { margin-bottom: 13px; }
+    .login-field label { display: block; margin-bottom: 6px; color: #475268; font-size: 11px; font-weight: 750; }
+    .login-field input { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #d5dbe7; border-radius: 9px; outline: none; }
+    .login-field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb(56 103 237 / 13%); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); font-size: 12px; white-space: nowrap; }
+    th { color: var(--muted); font-size: 10px; letter-spacing: .07em; text-transform: uppercase; }
+    td:first-child { font-weight: 700; }
+    .status { display: inline-flex; padding: 5px 8px; border-radius: 20px; background: #f0f2f6; color: #58647b; font-size: 10px; font-weight: 750; }
+    .status.complete { background: #eaf7f0; color: #147247; }
+    .empty { padding: 30px 12px; color: var(--muted); text-align: center; font-size: 13px; }
+    .editor-top { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; margin-bottom: 18px; }
+    .field label, .question-field label { display: block; margin-bottom: 6px; color: #475268; font-size: 11px; font-weight: 750; }
+    .field input, .field select, .question-field input, .question-field select { width: 100%; min-height: 39px; padding: 8px 10px; border: 1px solid #d5dbe7; border-radius: 9px; outline: none; background: #fff; color: var(--ink); }
+    input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb(56 103 237 / 13%); }
+    .questions-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 20px 0 12px; }
+    .questions-heading h3 { margin: 0; font-size: 14px; }
+    .question-list { display: grid; gap: 12px; }
+    .question-card { padding: 15px; border: 1px solid var(--line); border-radius: 13px; background: #fcfcfe; }
+    .question-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .question-card-top strong { font-size: 12px; }
+    .question-field { margin-bottom: 10px; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .correct-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(190px, 1fr); gap: 10px; margin-top: 10px; }
+    .editor-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .message { display: none; margin-bottom: 16px; padding: 13px 15px; border: 1px solid #f0c4c6; border-radius: 12px; background: #fff6f6; color: #9e3038; font-size: 13px; }
+    .message.success { border-color: #b6e2ca; background: #f0faf4; color: #147247; }
+    .message.visible { display: block; }
+    .section-note { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 22px, 650px); padding-top: 17px; }
+      .stats { grid-template-columns: 1fr; gap: 8px; }
+      .stat { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; }
+      .stat-value { margin: 0; font-size: 22px; }
+      .panel { padding: 16px; }
+      .editor-top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .options-grid { grid-template-columns: 1fr; }
+      .correct-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .brand-subtitle { display: none; }
+      .panel-heading { align-items: flex-start; }
+      .panel-heading h2 { font-size: 17px; }
+      .editor-actions { align-items: stretch; flex-direction: column-reverse; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Quiztron home">
+        <span class="brand-mark" aria-hidden="true">Q</span>
+        <span><span class="brand-name">QUIZTRON</span><span class="brand-subtitle">Admin dashboard</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:14px">
+        <a class="back-link" href="/">← Participant quiz</a>
+        <button id="logout" class="button secondary small hidden" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h1>Quiz administration</h1>
+        <p>Review participant scores and update round details, questions, answer choices, and correct answers.</p>
+        <div class="local-note">This dashboard is available only on the computer running the localhost server.</div>
+      </section>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+
+      <section id="login-panel" class="panel login-panel hidden" aria-labelledby="login-title">
+        <h2 id="login-title">Admin sign in</h2>
+        <p>Sign in with the administrator credentials configured for this server.</p>
+        <form id="login-form">
+          <div class="login-field">
+            <label for="admin-username">Username</label>
+            <input id="admin-username" name="username" type="text" maxlength="200" autocomplete="username" required>
+          </div>
+          <div class="login-field">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="password" type="password" maxlength="1024" autocomplete="current-password" required>
+          </div>
+          <button id="login-button" class="button primary" type="submit">Sign in</button>
+        </form>
+      </section>
+
+      <div id="admin-content" class="hidden">
+      <section class="stats" aria-label="Quiz statistics">
+        <article class="stat"><span class="stat-label">Completed participants</span><strong id="completed-count" class="stat-value">—</strong></article>
+        <article class="stat"><span class="stat-label">Questions in quiz</span><strong id="question-count" class="stat-value">—</strong></article>
+        <article class="stat"><span class="stat-label">Highest score</span><strong id="highest-score" class="stat-value">—</strong></article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Participant results</h2>
+            <p class="section-note">Results are saved on this computer while the server is running.</p>
+          </div>
+          <button id="refresh" class="button secondary small" type="button">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Participant</th><th>Status</th><th>Started</th><th>Round 1</th><th>Round 2</th><th>Round 3</th><th>Total</th></tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Edit quiz content</h2>
+            <p class="section-note">Each question has four answer choices. Select the correct answer before saving.</p>
+          </div>
+        </div>
+        <form id="round-form">
+          <div class="editor-top">
+            <div class="field">
+              <label for="round-select">Round to edit</label>
+              <select id="round-select"></select>
+            </div>
+            <div class="field">
+              <label for="round-title">Round title</label>
+              <input id="round-title" maxlength="100" required>
+            </div>
+            <div class="field">
+              <label for="round-time">Time limit (minutes)</label>
+              <input id="round-time" type="number" min="1" max="60" step="1" required>
+            </div>
+            <div class="field">
+              <label for="round-marks">Marks per correct answer</label>
+              <input id="round-marks" type="number" min="1" max="100" step="1" required>
+            </div>
+            <div class="field">
+              <label for="round-level">Difficulty</label>
+              <input id="round-level" maxlength="40" required>
+            </div>
+          </div>
+          <div class="questions-heading">
+            <h3>Questions</h3>
+            <button id="add-question" class="button secondary small" type="button">+ Add question</button>
+          </div>
+          <div id="question-list" class="question-list"></div>
+          <div class="editor-actions">
+            <span id="save-status" class="section-note" aria-live="polite">Changes are saved to the local data file.</span>
+            <button id="save-rounds" class="button primary" type="submit">Save quiz changes</button>
+          </div>
+        </form>
+      </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const state = { rounds: [], sessions: [], selectedRound: 0 };
+    const message = document.querySelector("#message");
+    const loginPanel = document.querySelector("#login-panel");
+    const loginForm = document.querySelector("#login-form");
+    const loginButton = document.querySelector("#login-button");
+    const adminContent = document.querySelector("#admin-content");
+    const logoutButton = document.querySelector("#logout");
+    const form = document.querySelector("#round-form");
+    const saveButton = document.querySelector("#save-rounds");
+    const roundSelect = document.querySelector("#round-select");
+    const questionList = document.querySelector("#question-list");
+
+    async function requestJson(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
+        headers: { "Content-Type": "application/json", ...options.headers }
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        const error = new Error(result.error || "The server could not complete the request.");
+        error.status = response.status;
+        throw error;
+      }
+      return result;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function showMessage(text, success = false) {
+      message.textContent = text;
+      message.classList.toggle("success", success);
+      message.classList.add("visible");
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.classList.remove("visible", "success");
+    }
+
+    function showLogin(error = "") {
+      adminContent.classList.add("hidden");
+      loginPanel.classList.remove("hidden");
+      logoutButton.classList.add("hidden");
+      clearMessage();
+      if (error) showMessage(error);
+      document.querySelector("#admin-username").focus();
+    }
+
+    function showDashboard() {
+      loginPanel.classList.add("hidden");
+      adminContent.classList.remove("hidden");
+      logoutButton.classList.remove("hidden");
+      clearMessage();
+    }
+
+    function handleAdminError(error) {
+      if (error.status === 401) {
+        showLogin("Your admin session has ended. Please sign in again.");
+      } else {
+        showMessage(error.message);
+      }
+    }
+
+    function formatDate(value) {
+      return value ? new Date(value).toLocaleString() : "—";
+    }
+
+    function updateOverview() {
+      const completed = state.sessions.filter(session => session.status === "complete");
+      const totalQuestions = state.rounds.reduce((sum, round) => sum + round.questions.length, 0);
+      const highest = completed.reduce((max, session) => Math.max(max, session.roundResults.reduce((sum, result) => sum + (result?.score || 0), 0)), 0);
+      document.querySelector("#completed-count").textContent = String(completed.length);
+      document.querySelector("#question-count").textContent = String(totalQuestions);
+      document.querySelector("#highest-score").textContent = String(highest);
+    }
+
+    function renderResults() {
+      const body = document.querySelector("#results-body");
+      const sessions = [...state.sessions].sort((a, b) => {
+        if (a.status !== b.status) return a.status === "complete" ? -1 : 1;
+        const scoreDifference = b.roundResults.reduce((sum, result) => sum + (result?.score || 0), 0) -
+          a.roundResults.reduce((sum, result) => sum + (result?.score || 0), 0);
+        return scoreDifference || new Date(b.startedAt) - new Date(a.startedAt);
+      });
+
+      if (!sessions.length) {
+        body.innerHTML = '<tr><td class="empty" colspan="7">No participants yet. Completed quizzes will appear here.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = sessions.map(session => {
+        const total = session.roundResults.reduce((sum, result) => sum + (result?.score || 0), 0);
+        const roundScore = result => result ? `${result.score} (${result.correct} correct)` : "—";
+        const status = session.status === "complete" ? "Complete" : "In progress";
+        return `<tr>
+          <td>${escapeHtml(session.participant)}</td>
+          <td><span class="status${session.status === "complete" ? " complete" : ""}">${status}</span></td>
+          <td>${escapeHtml(formatDate(session.startedAt))}</td>
+          <td>${roundScore(session.roundResults[0])}</td>
+          <td>${roundScore(session.roundResults[1])}</td>
+          <td>${roundScore(session.roundResults[2])}</td>
+          <td>${total}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    function collectEditor() {
+      const round = state.rounds[state.selectedRound];
+      round.title = document.querySelector("#round-title").value.trim();
+      round.timeLimit = Number(document.querySelector("#round-time").value) * 60;
+      round.marks = Number(document.querySelector("#round-marks").value);
+      round.level = document.querySelector("#round-level").value.trim();
+      round.questions = [...questionList.querySelectorAll(".question-card")].map(card => ({
+        question: card.querySelector(".question-text").value.trim(),
+        options: [...card.querySelectorAll(".option-text")].map(input => input.value.trim()),
+        answer: Number(card.querySelector(".correct-answer").value)
+      }));
+      return round;
+    }
+
+    function renderEditor() {
+      const round = state.rounds[state.selectedRound];
+      document.querySelector("#round-title").value = round.title;
+      document.querySelector("#round-time").value = Math.ceil(round.timeLimit / 60);
+      document.querySelector("#round-marks").value = round.marks;
+      document.querySelector("#round-level").value = round.level;
+      questionList.innerHTML = round.questions.map((question, index) => `
+        <article class="question-card">
+          <div class="question-card-top">
+            <strong>Question ${index + 1}</strong>
+            <button class="button danger small" type="button" data-remove="${index}" aria-label="Remove question ${index + 1}">Remove</button>
+          </div>
+          <div class="question-field">
+            <label for="question-${index}">Question text</label>
+            <input id="question-${index}" class="question-text" maxlength="500" required value="${escapeHtml(question.question)}">
+          </div>
+          <div class="options-grid">
+            ${question.options.map((option, optionIndex) => `
+              <div class="question-field">
+                <label for="question-${index}-option-${optionIndex}">Option ${String.fromCharCode(65 + optionIndex)}</label>
+                <input id="question-${index}-option-${optionIndex}" class="option-text" maxlength="200" required value="${escapeHtml(option)}">
+              </div>`).join("")}
+          </div>
+          <div class="correct-row">
+            <div class="question-field">
+              <label for="question-${index}-correct">Correct answer</label>
+              <select id="question-${index}-correct" class="correct-answer">
+                ${question.options.map((option, optionIndex) => `<option value="${optionIndex}"${question.answer === optionIndex ? " selected" : ""}>${String.fromCharCode(65 + optionIndex)}. ${escapeHtml(option)}</option>`).join("")}
+              </select>
+            </div>
+          </div>
+        </article>`).join("");
+      questionList.querySelectorAll("[data-remove]").forEach(button => {
+        button.addEventListener("click", () => {
+          collectEditor();
+          state.rounds[state.selectedRound].questions.splice(Number(button.dataset.remove), 1);
+          if (!state.rounds[state.selectedRound].questions.length) {
+            state.rounds[state.selectedRound].questions.push({
+              question: "",
+              options: ["", "", "", ""],
+              answer: 0
+            });
+          }
+          renderEditor();
+        });
+      });
+    }
+
+    function renderRoundSelect() {
+      roundSelect.innerHTML = state.rounds.map((round, index) =>
+        `<option value="${index}">${escapeHtml(round.title)}</option>`).join("");
+      roundSelect.value = String(state.selectedRound);
+    }
+
+    async function loadDashboard() {
+      clearMessage();
+      const data = await requestJson("/api/admin");
+      state.rounds = data.rounds;
+      state.sessions = data.sessions;
+      renderRoundSelect();
+      renderEditor();
+      renderResults();
+      updateOverview();
+    }
+
+    roundSelect.addEventListener("change", () => {
+      collectEditor();
+      state.selectedRound = Number(roundSelect.value);
+      renderEditor();
+    });
+
+    document.querySelector("#add-question").addEventListener("click", () => {
+      collectEditor();
+      state.rounds[state.selectedRound].questions.push({
+        question: "",
+        options: ["", "", "", ""],
+        answer: 0
+      });
+      renderEditor();
+      questionList.lastElementChild.querySelector(".question-text").focus();
+    });
+
+    document.querySelector("#refresh").addEventListener("click", async event => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      try {
+        await loadDashboard();
+        showMessage("Dashboard refreshed.", true);
+      } catch (error) {
+        handleAdminError(error);
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      collectEditor();
+      saveButton.disabled = true;
+      document.querySelector("#save-status").textContent = "Saving changes…";
+      clearMessage();
+      try {
+        const saved = await requestJson("/api/admin/rounds", {
+          method: "PUT",
+          body: JSON.stringify({ rounds: state.rounds })
+        });
+        state.rounds = saved.rounds;
+        renderRoundSelect();
+        renderEditor();
+        document.querySelector("#save-status").textContent = "Changes saved to data/rounds.json.";
+        showMessage("Quiz content saved. New quiz sessions will use the updated questions.", true);
+        updateOverview();
+      } catch (error) {
+        document.querySelector("#save-status").textContent = "Save failed. Your edits are still on this page.";
+        handleAdminError(error);
+      } finally {
+        saveButton.disabled = false;
+      }
+    });
+
+    loginForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!loginForm.reportValidity()) return;
+      loginButton.disabled = true;
+      clearMessage();
+      try {
+        await requestJson("/api/admin/login", {
+          method: "POST",
+          body: JSON.stringify({
+            username: document.querySelector("#admin-username").value,
+            password: document.querySelector("#admin-password").value
+          })
+        });
+        document.querySelector("#admin-password").value = "";
+        await loadDashboard();
+        showDashboard();
+      } catch (error) {
+        if (error.status === 401 || error.status === 429) showLogin(error.message);
+        else showMessage(`Could not sign in: ${error.message}`);
+      } finally {
+        loginButton.disabled = false;
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      try {
+        await requestJson("/api/admin/logout", { method: "POST", body: "{}" });
+        showLogin("You have signed out.");
+        document.querySelector("#admin-password").value = "";
+      } catch (error) {
+        handleAdminError(error);
+      } finally {
+        logoutButton.disabled = false;
+      }
+    });
+
+    requestJson("/api/admin/session").then(async session => {
+      if (!session.authenticated) {
+        showLogin();
+        return;
+      }
+      try {
+        await loadDashboard();
+        showDashboard();
+      } catch (error) {
+        handleAdminError(error);
+      }
+    }).catch(error => {
+      showLogin(`Could not connect to the Quiztron server: ${error.message}`);
+    });
+  </script>
+</body>
+</html>

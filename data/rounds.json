@@ -1,0 +1,476 @@
+[
+  {
+    "title": "Round 1: AI Battle",
+    "timeLimit": 600,
+    "marks": 1,
+    "level": "Easy",
+    "questions": [
+      {
+        "question": "What is the full form of AI?",
+        "options": [
+          "Applied Internet",
+          "Automated Input",
+          "Artificial Intelligence",
+          "Advanced Integration"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Who is known as the \"Father of AI\"?",
+        "options": [
+          "Bill Gates",
+          "Tim Berners-Lee",
+          "Dennis Ritchie",
+          "John McCarthy"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which company developed ChatGPT?",
+        "options": [
+          "Google",
+          "OpenAI",
+          "Intel",
+          "Meta"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Siri is an AI assistant developed by which company?",
+        "options": [
+          "Samsung",
+          "Microsoft",
+          "Apple",
+          "Amazon"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which is Google's AI chatbot?",
+        "options": [
+          "Copilot",
+          "Gemini",
+          "Alexa",
+          "Cortana"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Which company developed Alexa?",
+        "options": [
+          "IBM",
+          "Oracle",
+          "Amazon",
+          "Apple"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is the full form of ML?",
+        "options": [
+          "Machine Language",
+          "Memory Layer",
+          "Main Logic",
+          "Machine Learning"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which test is used to check a machine's intelligence?",
+        "options": [
+          "Unit Test",
+          "Turing Test",
+          "Stress Test",
+          "Bell Test"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Which of the following is an AI image generator?",
+        "options": [
+          "Notepad",
+          "Calculator",
+          "Midjourney",
+          "Excel"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is the full form of NLP?",
+        "options": [
+          "Network Layer Protocol",
+          "New Language Platform",
+          "Neural Logic Program",
+          "Natural Language Processing"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which is the most popular programming language for AI/ML?",
+        "options": [
+          "SQL",
+          "Python",
+          "HTML",
+          "CSS"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is a chatbot?",
+        "options": [
+          "A web browser",
+          "A virus",
+          "A hardware device",
+          "Software that simulates conversation"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which of the following is NOT an AI assistant?",
+        "options": [
+          "Cortana",
+          "Siri",
+          "BIOS",
+          "Google Assistant"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which key technology is used in self-driving cars?",
+        "options": [
+          "Fax machine",
+          "Dial-up modem",
+          "AI + sensors",
+          "Floppy disk"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which Python library is used for machine learning?",
+        "options": [
+          "Bootstrap",
+          "Laravel",
+          "jQuery",
+          "Scikit-learn"
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "title": "Round 2: AI Circuit",
+    "timeLimit": 900,
+    "marks": 5,
+    "level": "Hard",
+    "questions": [
+      {
+        "question": "What is the output of the ReLU activation function?",
+        "options": [
+          "1/(1+e⁻ˣ)",
+          "x²",
+          "tanh(x)",
+          "max(0, x)"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which algorithm propagates error backwards to update weights in a neural network?",
+        "options": [
+          "Backpropagation",
+          "Dijkstra",
+          "Apriori",
+          "Bubble Sort"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Which research paper introduced the Transformer architecture?",
+        "options": [
+          "ImageNet Classification",
+          "Attention Is All You Need",
+          "GANs Explained",
+          "Deep Blue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is overfitting?",
+        "options": [
+          "Good performance on training data but poor performance on new data",
+          "There is too little data",
+          "The model fails to train",
+          "The model is too small"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Which of the following is an unsupervised learning algorithm?",
+        "options": [
+          "Decision Tree",
+          "K-Means",
+          "Linear Regression",
+          "Logistic Regression"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Which two main components make up a GAN?",
+        "options": [
+          "Master and Slave",
+          "Encoder and Decoder",
+          "Generator and Discriminator",
+          "Input and Output"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which lightweight messaging protocol is commonly used in IoT?",
+        "options": [
+          "MQTT",
+          "POP3",
+          "FTP",
+          "SMTP"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Which neural network is mainly used for image processing?",
+        "options": [
+          "SOM",
+          "Hopfield Network",
+          "CNN",
+          "RNN"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which cloud model gives developers a runtime platform to deploy apps?",
+        "options": [
+          "DaaS",
+          "SaaS",
+          "PaaS",
+          "IaaS"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is the formula for Precision?",
+        "options": [
+          "(TP + TN) / Total",
+          "TP / (TP + FN)",
+          "TN / (TN + FP)",
+          "TP / (TP + FP)"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "What is the full form of RAG in AI?",
+        "options": [
+          "Recurrent Attention Graph",
+          "Random Access Generator",
+          "Rapid AI Gateway",
+          "Retrieval-Augmented Generation"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Where does the vanishing gradient problem mainly occur?",
+        "options": [
+          "Deep networks using sigmoid/tanh activations",
+          "Databases",
+          "Compilers",
+          "Sorting algorithms"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Which deep learning framework was developed by Google?",
+        "options": [
+          "PyTorch",
+          "TensorFlow",
+          "Theano",
+          "Caffe"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the output size of SHA-256?",
+        "options": [
+          "64 bits",
+          "128 bits",
+          "512 bits",
+          "256 bits"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "What does an SQL Injection attack target?",
+        "options": [
+          "Router firmware",
+          "Monitor",
+          "Database (through user input)",
+          "Keyboard"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "title": "Round 3: AI Master Round",
+    "timeLimit": 900,
+    "marks": 10,
+    "level": "Hard",
+    "questions": [
+      {
+        "question": "Which optimizer combines Momentum and RMSProp?",
+        "options": [
+          "Adam",
+          "Adagrad",
+          "Newton's Method",
+          "SGD"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does BPE stand for in LLM tokenization?",
+        "options": [
+          "Basic Prompt Encoder",
+          "Byte Pair Encoding",
+          "Binary Process Engine",
+          "Batch Parallel Execution"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the computational complexity of self-attention with respect to sequence length n?",
+        "options": [
+          "O(n)",
+          "O(n²)",
+          "O(log n)",
+          "O(1)"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Which DeepMind model predicts protein structures?",
+        "options": [
+          "Deep Blue",
+          "Watson",
+          "AlphaFold",
+          "AlphaGo"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which technique trains a small model using a large model's knowledge?",
+        "options": [
+          "Knowledge Distillation",
+          "Pruning",
+          "Bagging",
+          "Dropout"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does LoRA stand for in LLM fine-tuning?",
+        "options": [
+          "Long Range Antenna",
+          "Linear Output Regression Algorithm",
+          "Layered Optimization Ratio Approach",
+          "Low-Rank Adaptation"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "Which activation function is used in the output layer for multi-class classification?",
+        "options": [
+          "Linear",
+          "Softmax",
+          "Step function",
+          "ReLU"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is prompt injection?",
+        "options": [
+          "Overriding an LLM's original instructions using crafted input",
+          "A technique for writing prompts",
+          "Compressing a model",
+          "Overclocking a GPU"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is the core principle of Zero-Trust security?",
+        "options": [
+          "Trust the internal network",
+          "Trust but verify",
+          "Never trust, always verify",
+          "Trust only the firewall"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is the main advantage of edge computing?",
+        "options": [
+          "More storage",
+          "Lower latency",
+          "Free internet",
+          "Bigger screen"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "BERT is based on which architecture?",
+        "options": [
+          "Transformer decoder only",
+          "CNN",
+          "Transformer encoder",
+          "LSTM"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What does \"hallucination\" mean in LLMs?",
+        "options": [
+          "The model crashes",
+          "The model slows down",
+          "Data gets deleted",
+          "Generating believable but incorrect information"
+        ],
+        "answer": 3
+      },
+      {
+        "question": "What is the full form of RLHF?",
+        "options": [
+          "Real-time Logic Hardware Framework",
+          "Recursive Learning High Frequency",
+          "Reinforcement Learning from Human Feedback",
+          "Regression Loss Hyper-Function"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is the Diffie-Hellman algorithm used for?",
+        "options": [
+          "Image encoding",
+          "Secure key exchange",
+          "File compression",
+          "Load balancing"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Which of the following is a vector database?",
+        "options": [
+          "Apache Kafka",
+          "Pinecone",
+          "Jenkins",
+          "Nginx"
+        ],
+        "answer": 1
+      }
+    ]
+  }
+]

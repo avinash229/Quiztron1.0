@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: quiztron
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: QUIZ_COOKIE_SECURE
+        value: "true"
+      - key: QUIZ_ADMIN_USERNAME
+        sync: false
+      - key: QUIZ_ADMIN_PASSWORD
+        sync: false
+      - key: DATABASE_URL
+        sync: false
