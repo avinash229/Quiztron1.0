@@ -175,6 +175,21 @@ async function createSession(participant, roundCount) {
   return session.id;
 }
 
+async function deleteSession(sessionId) {
+  if (!pool) {
+    const sessions = readJson(RESULTS_FILE);
+    const remainingSessions = sessions.filter(session => session.id !== sessionId);
+    if (remainingSessions.length === sessions.length) {
+      throw new StorageError(404, "Quiz session not found.");
+    }
+    saveJson(RESULTS_FILE, remainingSessions);
+    return;
+  }
+
+  const { rowCount } = await pool.query("DELETE FROM quiz_sessions WHERE id = $1", [sessionId]);
+  if (!rowCount) throw new StorageError(404, "Quiz session not found.");
+}
+
 async function submitRound(sessionId, roundIndex, answers, timeExpired, rounds) {
   if (!pool) {
     const sessions = readJson(RESULTS_FILE);
@@ -252,6 +267,7 @@ module.exports = {
   StorageError,
   close,
   createSession,
+  deleteSession,
   getAdminData,
   getRounds,
   initialize,

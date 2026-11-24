@@ -266,6 +266,13 @@ async function handleApi(request, response, pathname) {
     return sendJson(response, 200, { rounds: body.rounds });
   }
 
+  const adminSessionMatch = pathname.match(/^\/api\/admin\/sessions\/([0-9a-f-]{36})$/i);
+  if (request.method === "DELETE" && adminSessionMatch) {
+    if (!enforceSameOrigin(request, response) || !authenticateAdmin(request, response)) return;
+    await storage.deleteSession(adminSessionMatch[1]);
+    return sendJson(response, 200, { deleted: true });
+  }
+
   if (request.method === "POST" && pathname === "/api/sessions") {
     const body = await readBody(request);
     const participant = typeof body?.name === "string" ? body.name.trim() : "";
