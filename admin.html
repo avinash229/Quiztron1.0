@@ -164,7 +164,7 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>Participant</th><th>Status</th><th>Started</th><th>Round 1</th><th>Round 2</th><th>Round 3</th><th>Total</th></tr>
+              <tr><th>Participant</th><th>Status</th><th>Started</th><th>Round 1</th><th>Round 2</th><th>Round 3</th><th>Total</th><th>Actions</th></tr>
             </thead>
             <tbody id="results-body"></tbody>
           </table>
@@ -307,7 +307,7 @@
       });
 
       if (!sessions.length) {
-        body.innerHTML = '<tr><td class="empty" colspan="7">No participants yet. Completed quizzes will appear here.</td></tr>';
+        body.innerHTML = '<tr><td class="empty" colspan="8">No participants yet. Completed quizzes will appear here.</td></tr>';
         return;
       }
 
@@ -323,8 +323,27 @@
           <td>${roundScore(session.roundResults[1])}</td>
           <td>${roundScore(session.roundResults[2])}</td>
           <td>${total}</td>
+          <td><button class="button danger small" type="button" data-delete-session="${escapeHtml(session.id)}" aria-label="Delete results for ${escapeHtml(session.participant)}">Delete</button></td>
         </tr>`;
       }).join("");
+      body.querySelectorAll("[data-delete-session]").forEach(button => {
+        button.addEventListener("click", async () => {
+          const session = state.sessions.find(item => item.id === button.dataset.deleteSession);
+          if (!session || !window.confirm(`Permanently delete the ranking for ${session.participant}?`)) return;
+          button.disabled = true;
+          clearMessage();
+          try {
+            await requestJson(`/api/admin/sessions/${encodeURIComponent(session.id)}`, { method: "DELETE" });
+            state.sessions = state.sessions.filter(item => item.id !== session.id);
+            renderResults();
+            updateOverview();
+            showMessage(`Deleted the ranking for ${session.participant}.`, true);
+          } catch (error) {
+            handleAdminError(error);
+            button.disabled = false;
+          }
+        });
+      });
     }
 
     function collectEditor() {

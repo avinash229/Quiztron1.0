@@ -42,4 +42,4 @@ Render's free web service may sleep when idle. Check current Render and database
 
 ## Admin security
 
-The admin API requires a signed-in session. Its `HttpOnly`, `SameSite=Strict` cookie expires after 8 hours, sign-in attempts are rate limited, and the admin password is never sent with quiz content. HTTPS deployments must set `QUIZ_COOKIE_SECURE=true`.
+The admin API requires a signed-in session. Its `HttpOnly`, `SameSite=Strict` cookie expires after 8 hours, sign-in attempts are rate limited, and the admin password is never sent with quiz content. Administrators can permanently delete a participant's ranking from the results table. HTTPS deployments must set `QUIZ_COOKIE_SECURE=true`.
